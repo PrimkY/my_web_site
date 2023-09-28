@@ -1,0 +1,14 @@
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    ssl_certificate         /etc/nginx/ssl/my.site.crt;
+    ssl_certificate_key     /etc/nginx/ssl/my.site.key;
+    server_name server.my.site;
+
+    location / {
+        proxy_set_header   X-Forwarded-For $remote_addr;
+        proxy_set_header   Host $http_host;
+        proxy_pass http://server:3000/;
+    }
+}
